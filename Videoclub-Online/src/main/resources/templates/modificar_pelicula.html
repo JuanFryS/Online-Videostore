@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head> 
+
+    <title>Modificar Pelicula</title>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"/>
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+
+  </head>
+
+  <style>
+
+    body, html{
+      height: 100%;
+      background: url(http://www.2gb.com/sites/default/files/field/image/20140328/moviereel.jpg) no-repeat center center scroll;
+      font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+      background-repeat: no-repeat;
+      -webkit-background-size: cover;
+    }
+
+    h1 { 
+      font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+      text-align: center;
+    }
+    .container{
+      background-color: rgba(255, 255, 255, 0.90);
+      /* shadows and rounded borders */
+      -moz-border-radius: 2px;
+      -webkit-border-radius: 2px;
+      border-radius: 5px;
+      -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+      -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);    
+      width: 50%;
+      margin-top: 40px;
+    }
+
+    .formulario{
+      margin: 15px;
+      margin-bottom: 0px;
+    }
+    .login-register{
+      font-size: 15px;
+      text-align: center;
+    }
+
+    .navbar {
+      border-radius: 0px;
+    }
+    
+  </style>
+
+  <body>
+    <!--Panel de Navegacion-->
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" th:href="@{/home}">Videoclub Online</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li><a th:href="@{/home}">Home</a></li>
+            <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Usuarios<span class="caret"></span></a>
+              <ul class="dropdown-menu" style="padding-top:0px;">
+                <li><a th:href="@{/admin_usuarios/añadir}">Añadir Usuario</a></li>
+                <li><a th:href="@{/admin_usuarios/modificar}">Modificar Usuario</a></li>
+                <li><a th:href="@{/admin_usuarios/borrar}">Borrar Usuario</a></li>
+              </ul>
+            </li>
+            <li class="dropdown active" sec:authorize="hasRole('ROLE_ADMIN')">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Peliculas<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a th:href="@{/admin_peliculas/añadir}">Añadir Película</a></li>
+                <li class="active"><a th:href="@{/admin_peliculas/modificar}">Modificar Película</a></li>
+                <li><a th:href="@{/admin_peliculas/borrar}">Borrar Película</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <form th:action="@{/logout}" method="post">
+                <input class="glyphicon glyphicon-log-out btn btn-default navbar-btn" style="color:red;" type="submit" value="Salir!" />
+              </form>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Contenido de la web -->
+    <div class="container">
+      <div class="row" style="padding-bottom: 40px;">
+        <div class="col-xs-12 col-sm-8 col-md-6" style="width: 100%; margin:0 auto;">
+          <form class="formulario" th:action="@{/modificar_pelicula}" method="post">
+            <h1>Modificar datos de pelicula</h1>
+            <p style="color:red" th:if="${error}" th:text="${desc_error}"></p>          
+            <div class="form-group">
+              <input type="text" name="nombre" id="nombre" required="required" class="form-control input-lg" placeholder="Nombre de la película"/>
+            </div>
+            <div class="form-group">
+              <input type="text" name="url" id="url" required="required" class="form-control input-lg" placeholder="URL de la película"/>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-3 col-md-3">
+                <div class="form-group">
+                  <input type="text" name="año" id="año" class="form-control input-lg" placeholder="Año"/>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-5 col-md-5">
+                <div class="form-group">
+                  <input type="text" name="director" id="director" class="form-control input-lg" placeholder="Director"/>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="form-group">
+                  <input type="text" name="valoracion" id="valoracion" class="form-control input-lg" placeholder="Valoracion" min="0" max="10"/>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="text" name="descripcion" id="descripcion" class="form-control input-lg" placeholder="Descripción"/>
+            </div>
+            <div class="form-group">
+              <input type="text" name="reparto" id="reparto" class="form-control input-lg" placeholder="Reparto"/>
+            </div>
+            <div class="form-group">
+              <input type="text" name="url_portada" id="url_portada" class="form-control input-lg" placeholder="URL de la portada"/>
+            </div>
+            <div>
+              <input type="submit" value="Modificar los datos" class="btn btn-primary btn-block btn-lg"/>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

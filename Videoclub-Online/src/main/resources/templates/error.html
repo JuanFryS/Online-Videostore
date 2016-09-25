@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head> 
+
+    <title>Ups! Error</title>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"/>
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+
+  </head>
+
+  <style>
+
+    body, html{
+      display: table;
+      position: relative;
+      width: 100%;
+      background: url(http://www.seguridad.gob.sv/wp-content/uploads/2015/07/Error404.jpg);
+      font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+      background-repeat: no-repeat;
+      background-size: cover;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+    }
+
+    h1 { 
+      font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+      text-align: center;
+    }
+
+    /*    .container{
+    background-color: rgba(255, 255, 255, 0.90);
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 5px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);    
+    width: 50%;
+    margin-top: 40px;
+    }*/
+
+    .navbar {
+      border-radius: 0px;
+    }
+
+  </style>
+
+  <body>
+    <!--Panel de Navegacion-->
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" th:href="@{/home}">Videoclub Online</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li><a th:href="@{/home}">Home</a></li>
+            <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Usuarios<span class="caret"></span></a>
+              <ul class="dropdown-menu" style="padding-top:0px;">
+                <li><a th:href="@{/admin_usuarios/añadir}">Añadir Usuario</a></li>
+                <li><a th:href="@{/admin_usuarios/modificar}">Modificar Usuario</a></li>
+                <li><a th:href="@{/admin_usuarios/borrar}">Borrar Usuario</a></li>
+              </ul>
+            </li>
+            <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Peliculas<span class="caret"></span></a>
+              <ul class="dropdown-menu" style="padding-top:0px;">
+                <li><a th:href="@{/admin_peliculas/añadir}">Añadir Película</a></li>
+                <li><a th:href="@{/admin_peliculas/modificar}">Modificar Película</a></li>
+                <li><a th:href="@{/admin_peliculas/borrar}">Borrar Película</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <form th:action="@{/logout}" method="post">
+                <input class="glyphicon glyphicon-log-out btn btn-default navbar-btn" style="color:red;" type="submit" value="Salir!" />
+              </form>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </body>
+</html>

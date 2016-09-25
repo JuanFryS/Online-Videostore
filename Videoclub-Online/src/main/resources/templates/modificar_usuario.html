@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head> 
+
+    <title>Modificar Usuario</title>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"/>
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+
+  </head>
+
+  <style>
+
+    body, html{
+      height: 100%;
+      background-repeat: no-repeat;
+      background: url(http://www.pardot.com/content/uploads/2013/02/header-lead-nurturing.jpg) no-repeat center center scroll;
+      -webkit-background-size: cover;
+      font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+    }
+
+    h1 { 
+      font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+      text-align: center;
+      font-size: 33px;
+    }
+
+    .form-group{
+      margin-bottom: 15px;
+    }
+
+    label{
+      margin-bottom: 15px;
+    }
+
+    input,
+    input::-webkit-input-placeholder {
+      font-size: 11px;
+      padding-top: 3px;
+    }
+
+    .main-login{
+      background-color: rgba(255, 255, 255, 0.9);
+      /* shadows and rounded borders */
+      -moz-border-radius: 2px;
+      -webkit-border-radius: 2px;
+      border-radius: 5px;
+      -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+      -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+
+    }
+
+    .main-center{
+      margin-top: 30px;
+      margin: 0 auto;
+      max-width: 330px;
+      padding: 20px 40px;
+
+    }
+
+    .login-button{
+      margin-top: 5px;
+    }
+
+    .login-register{
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .navbar {
+      border-radius: 0px;
+    }
+    
+    .main{
+      margin-top: 2%;
+    }
+
+  </style>
+
+  <body>
+    <!--Panel de Navegacion-->
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" th:href="@{/home}">Videoclub Online</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li><a th:href="@{/home}">Home</a></li>
+            <li class="dropdown active" sec:authorize="hasRole('ROLE_ADMIN')">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Usuarios<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a th:href="@{/admin_usuarios/añadir}">Añadir Usuario</a></li>
+                <li class="active"><a th:href="@{/admin_usuarios/modificar}">Modificar Usuario</a></li>
+                <li><a th:href="@{/admin_usuarios/borrar}">Borrar Usuario</a></li>
+              </ul>
+            </li>
+            <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Peliculas<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a th:href="@{/admin_peliculas/añadir}">Añadir Película</a></li>
+                <li><a th:href="@{/admin_peliculas/modificar}">Modificar Película</a></li>
+                <li><a th:href="@{/admin_peliculas/borrar}">Borrar Película</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <form th:action="@{/logout}" method="post">
+                <input class="glyphicon glyphicon-log-out btn btn-default navbar-btn" style="color:red;" type="submit" value="Salir!" />
+              </form>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Contenido de la web -->
+    <div class="container">
+      <div class="row main">
+        <div class="main-login main-center">
+          <h1>Modificar Usuario</h1>
+          <p style="color:red" th:if="${error}" th:text="${desc_error}"></p>
+          <form class="form-horizontal" th:action="@{/modificar_usuario}" method="post">
+
+            <div class="form-group">
+              <label for="username" class="cols-sm-2 control-label">Nombre: </label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                  <input type="text" required="required" class="form-control" name="nombre" id="username"  placeholder="Introduza su nombre de usuario"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="password" class="cols-sm-2 control-label">Contraseña: </label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                  <input type="password" class="form-control" name="password" id="password"  placeholder="Introduzca su contraseña"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="confirm" class="cols-sm-2 control-label">Confirma la contraseña: </label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                  <input type="password" class="form-control" name="password2" id="confirm"  placeholder="Repita su contraseña"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email" class="cols-sm-2 control-label">Email: </label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                  <input type="email" class="form-control" name="email" id="email"  placeholder="Introduzca su Email"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group ">
+              <input type="submit" class="btn btn-primary btn-lg btn-block login-button" value="Modificar Usuario" />
+              <!--<input type="submit" class="btn btn-primary btn-lg btn-block login-button">Modificar Usuario</input>-->
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
